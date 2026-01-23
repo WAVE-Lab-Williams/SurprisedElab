@@ -164,26 +164,22 @@ INSTR PROCEDURE (*sec_instr)
 
 /* -------  Set Preload Images for Instr + Demo (*preload_instr) -------------- */
 
-forPreload.push(`${stimFolder}demo-circles.png`);
-// make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
-var demo_circle_colors = ["blue","orange"];
-var demo_display_durations = [200, 500];
-for (var i = 0; i < demo_circle_colors.length; i++) {
-    forPreload.push(`${stimFolder}${demo_circle_colors[i]}-circle.png`);
-}
 
-//decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
-var thisDemoCircle = randomChoice(demo_circle_colors,1)[0];
-var thisDemoDispDuration = randomChoice(demo_display_durations,1)[0];
+// // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
+// var demo_image = ["demo"];
+// var demo_display_durations = [200, 500];
+// forPreload.push(`${stimFolder}demo-1.png`);
+
+// //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
+// var thisDemoImage = randomChoice(demo_image,1)[0];
+// var thisDemoDispDuration = randomChoice(demo_display_durations,1)[0];
 
 /* -------  Push Instr + Demo Trials to timeline_instr (*push_instr) -------------- */
 var instrContent = loadInstrContent();
-var demoTrialIndex = 3;
-var [instrContent_beforedemo,instrContent_afterdemo] = cutArray(instrContent,3);
 
-var instructions1 = {
+var instructions = {
     type: jsPsychInstructions,
-    pages: instrContent_beforedemo,
+    pages: instrContent,
     show_clickable_nav: true,
     allow_keys: false,
     allow_backward: false,
@@ -196,24 +192,44 @@ var instructions1 = {
     }, // end delay_time
 };
 
-var instructions2 = {
-    type: jsPsychInstructions,
-    pages: instrContent_afterdemo,
-    show_clickable_nav: true,
-    allow_keys: false,
-    allow_backward: false,
-    delay_time: function(){
-        const calculated_delays = [];
-        for (let i = demoTrialIndex; i < instrContent.length; i++) {
-            calculated_delays.push(calculate_delay_time(count_words(instrContent[i]),60));
-        }
-        return calculated_delays
-    }, // end delay_time
-};
+// var demoTrialIndex = 3;
+// var [instrContent_beforedemo,instrContent_afterdemo] = cutArray(instrContent,demoTrialIndex);
 
-timelineinstr.push(instructions1);
-runSingleTrial(thisDemoCircle,thisDemoDispDuration,timelineinstr,"prac") // pushesyour demo trial
-timelineinstr.push(instructions2);
+// var instructions1 = {
+//     type: jsPsychInstructions,
+//     pages: instrContent_beforedemo,
+//     show_clickable_nav: true,
+//     allow_keys: false,
+//     allow_backward: false,
+//     delay_time: function(){
+//         const calculated_delays = [];
+//         for (let i = 0; i < instrContent.length; i++) {
+//             calculated_delays.push(calculate_delay_time(count_words(instrContent[i]),60));
+//         }
+//         return calculated_delays
+//     }, // end delay_time
+// };
+
+// var instructions2 = {
+//     type: jsPsychInstructions,
+//     pages: instrContent_afterdemo,
+//     show_clickable_nav: true,
+//     allow_keys: false,
+//     allow_backward: false,
+//     delay_time: function(){
+//         const calculated_delays = [];
+//         for (let i = demoTrialIndex; i < instrContent.length; i++) {
+//             calculated_delays.push(calculate_delay_time(count_words(instrContent[i]),60));
+//         }
+//         return calculated_delays
+//     }, // end delay_time
+// };
+
+// timelineinstr.push(instructions1);
+// runSingleTrial(thisDemoCircle,thisDemoDispDuration,timelineinstr,"prac") // pushesyour demo trial
+// timelineinstr.push(instructions2);
+
+timelineinstr.push(instructions);
 
 /*
 ===============================================================
@@ -223,11 +239,15 @@ EXPERIMENT SECTION (*sec_expt)
 
 /* -------- defining factors && exptdesign (*factors) --------*/
 
-var poss_circle_colors = ["blue","orange"];
-var poss_disp_duration = [200, 500];
+var poss_people_race = ["W","L","B","A"];
+var poss_people_sex = ["M","F"];
+var poss_people_variation = ["1","2"];
+var poss_disp_duration = [200, 500, 700];
 
 var factors = {
-    circle_color: poss_circle_colors,
+    people_race: poss_people_race,
+    people_sex: poss_people_sex,
+    people_variation: poss_people_variation,
     disp_duration: poss_disp_duration
 }
 
@@ -235,14 +255,21 @@ var full_design = jsPsych.randomization.factorial(factors, 1);
 console.log(full_design);
 
 /* -------  Set Preload Images for Expt (*preload_expt) -------------- */
-for (var i = 0; i < poss_circle_colors.length; i++) {
-    forPreload.push(`${stimFolder}${poss_circle_colors[i]}-circle.png`);
-}
+for (var i = 0; i < poss_people_race.length; i++) {
+    for (var j = 0; j < poss_people_sex.length; j++) {
+        for (var k = 0; k < poss_people_variation.length; k++) {
+            forPreload.push(`${stimFolder}${poss_people_race[i]}${poss_people_sex[j]}-${poss_people_variation[k]}.png`);
+        } // end k loop
+    } // end j loop
+} // end i loop
 
 /* ------- timeline expt push (*pushExpt ) -------------- */
-for (var elem = 0; elem < full_design.length; elem++) {
+// for (var elem = 0; elem < full_design.length; elem++) {
+for (var elem = 0; elem < 1; elem++) {
     runSingleTrial(
-        full_design[elem].circle_color,
+        full_design[elem].people_race,
+        full_design[elem].people_sex,
+        full_design[elem].people_variation,
         full_design[elem].disp_duration,
         timelineexpt,
         'expt',
