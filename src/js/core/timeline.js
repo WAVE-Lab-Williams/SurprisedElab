@@ -325,7 +325,7 @@ var closing = {
     }, // on finish complete
 };
 
-timelineclose.push(feedback_summary);
+// timelineclose.push(feedback_summary);
 timelineclose.push(debrief_qs);
 timelineclose.push({ type: jsPsychFullscreen, fullscreen_mode: false });
 timelineclose.push(closing);

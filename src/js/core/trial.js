@@ -52,13 +52,15 @@ function runSingleTrial(
 
 
 
-    /* testing a slider */
-    let tar_size = randomIntFromRange(50, 90);
-    let target_resizing_decimal = tar_size*.01;
-    let target_width = Math.floor(imgWidth * target_resizing_decimal);
-    let target_height = Math.floor(imgHeight * target_resizing_decimal);
-    let target_x_random = randomIntFromRange(0, w-target_width); // accounts for img dims to not go off screen
-    let target_y_random = randomIntFromRange(0, h-target_height);
+    /* target image size */
+    let tar_size = randomIntFromRange(40, 100);
+    let resize_decimal = tar_size*.01;
+
+    let target_width = Math.floor(imgWidth * resize_decimal);
+    let target_height = Math.floor(imgHeight * resize_decimal);
+
+    let target_x_random = randomIntFromRange(100, w-100-target_width); // accounts for img dims to not go off screen
+    let target_y_random = randomIntFromRange(50, h-50-target_height);
 
     console.log(w)
     console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
@@ -67,16 +69,17 @@ function runSingleTrial(
     console.log(`Where the top of the image will be positioned target_y_random: ${target_y_random}`)
     console.log(`target_height: ${target_height}`)
 
+
     var slider_start = 70;
-    var min = 20;
-    var max = 120;
+    var slider_min = 20;
+    var slider_max = 120;
 
     var dispImgSlider = {
         type: jsPsychHtmlSliderResponseResizing,
         stimulus: `<img src="${thisStim}" />`,
         slider_start: slider_start,
-        min: min,
-        max: max,
+        min: slider_min,
+        max: slider_max,
         slider_width: 500,
         labels: ["smallest","largest"],
         trial_duration: null,
@@ -87,8 +90,8 @@ function runSingleTrial(
             trial_stimulus: thisStim,
             correct_response: tar_size,
             slider_start: slider_start,
-            min: min,
-            max: max,
+            min: slider_min,
+            max: slider_max,
         }, // data end
         on_finish: function(data){
             data.thisDifference = data.response - tar_size
@@ -114,7 +117,7 @@ function runSingleTrial(
 
     var prestim = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: `${persistent_prompt}`,
+        stimulus: "",
         choices: "NO_KEYS",
         trial_duration: PRESTIM_DISP_TIME,
         data: {
@@ -122,9 +125,19 @@ function runSingleTrial(
         }
     };
 
+     var poststim = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `${persistent_prompt}`,
+        choices: "NO_KEYS",
+        trial_duration: POSTSTIM_DISP_TIME,
+        data: {
+            trial_category: 'poststim_ISI' + trialType,
+        }
+    };
+
     var fixation = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: `${persistent_prompt}<div style="font-size:60px;">+</div>`,
+        stimulus: `<div style="font-size:60px;">+</div>`,
         choices: "NO_KEYS",
         trial_duration: FIXATION_DISP_TIME,
         data: {
@@ -140,11 +153,10 @@ function runSingleTrial(
     timelineTrialsToPush.push(prestim);
     timelineTrialsToPush.push(fixation);
     timelineTrialsToPush.push(dispImg);
-    timelineTrialsToPush.push(prestim);
+    timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(dispImgSlider);
 
 
 }
 
-// make a poststim, set in parameters the length of time to be 500 ms.

@@ -6,8 +6,8 @@ Defining Parameter Variables
 
 var stimFolder = 'src/assets/stimuli/people/'
 
-var runIntro = true;
-var runInstr = true;
+var runIntro = false;
+var runInstr = false;
 var runExpt = true;
 var runClose = true;
 var runPreload = true;
@@ -15,6 +15,7 @@ var runPreload = true;
 // Defining Core Variables that remain constant
 var PRESTIM_DISP_TIME = 1000;
 var FIXATION_DISP_TIME = 500;
+var POSTSTIM_DISP_TIME = 500;
 
 // Variables for Participant Information
 var estTotalRunTime = 4;
@@ -47,7 +48,7 @@ var h =
 // setting display image width
 var origWidth = 250;
 var origHeight = 545;
-var imgWidth = origHeight; // your desired display img width
+var imgWidth = origWidth; // your desired display img width
 var imgHeight = (imgWidth / origWidth) * origHeight;
 
 
