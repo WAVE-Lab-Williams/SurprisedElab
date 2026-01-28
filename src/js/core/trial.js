@@ -48,7 +48,7 @@ function runSingleTrial(
 
     /*--------------------------- Experiment specific variables ---------------------------*/
     var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-    var persistent_prompt = `<div style="position: fixed; top: 50px; left: 50%; transform: translateX(-50%); text-align: center;">Drag the slider to recreate the exact size of the image you just saw</div>`;
+    var persistent_prompt = `<div style="position: fixed; top: 50px; left: 50%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to recreate the exact size of the image you just saw, to the best of your ability:</div>`;
 
 
 

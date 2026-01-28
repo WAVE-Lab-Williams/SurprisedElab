@@ -302,7 +302,7 @@ var debrief_qs = {
     html: debriefForm(),
     button_label: ['Submit'],
     data: {
-        trial_category: 'debrief',
+        trial_category: 'debriefexpt',
         endTime: function () {
             var endTime = new Date().toLocaleString('en-US', {
                 timeZone: 'America/New_York',
