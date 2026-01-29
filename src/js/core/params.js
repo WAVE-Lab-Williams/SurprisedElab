@@ -13,15 +13,15 @@ var runClose = true;
 var runPreload = true;
 
 // Defining Core Variables that remain constant
-var PRESTIM_DISP_TIME = 1000;
+var PRESTIM_DISP_TIME = 700;
 var FIXATION_DISP_TIME = 500;
 var POSTSTIM_DISP_TIME = 500;
 
 // Variables for Participant Information
-var estTotalRunTime = 4;
-var estDollars = 0.6;
+var estTotalRunTime = 3;
+var estDollars = 0.45;
 var participantType = 'prolific';
-var completionCode = 'C4MF2IV1';
+var completionCode = 'CN955H3L';
 var prolific_url = 'https://app.prolific.co/submissions/complete?cc='+completionCode;
 
 // WAVE Backend Configuration
