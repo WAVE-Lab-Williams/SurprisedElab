@@ -92,6 +92,11 @@ function runSingleTrial(
             slider_start: slider_start,
             min: slider_min,
             max: slider_max,
+            person_race: personRace,
+            person_sex: personSex,
+            person_variation: personVariation,
+            target_x_position: target_x_random,
+            target_y_position: target_y_random,
         }, // data end
         on_finish: function(data){
             data.thisDifference = data.response - tar_size
