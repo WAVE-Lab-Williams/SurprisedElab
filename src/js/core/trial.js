@@ -54,7 +54,7 @@ function runSingleTrial(
 
     /* target image size */
     // let tar_size = randomIntFromRange(40, 100);
-    let tar_size = 90;
+    let tar_size = 120;
     let resize_decimal = tar_size*.01;
 
     let target_width = Math.floor(imgWidth * resize_decimal);
