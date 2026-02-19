@@ -239,8 +239,8 @@ EXPERIMENT SECTION (*sec_expt)
 
 /* -------- defining factors && exptdesign (*factors) --------*/
 
-var poss_people_race = ["W","L","B","A"];
-var poss_people_sex = ["M","F"];
+var poss_people_race = ["W","B","A"];
+var poss_people_sex = ["F"];
 var poss_people_variation = ["1","2"];
 var poss_disp_duration = [200, 500, 700];
 
