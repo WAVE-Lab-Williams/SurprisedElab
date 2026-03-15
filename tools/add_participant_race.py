@@ -3,8 +3,12 @@ import pandas as pd
 import os
 
 working_dir = os.path.dirname(os.path.abspath(__file__))
-df_debrief = pd.read_csv(os.path.join(working_dir, 'data', 'dataframe_debrief.csv'))
-df_answer = pd.read_csv(os.path.join(working_dir, 'data', 'dataframe_answer.csv'))
+
+debrief_filename = 'dataframe_debrief_2026-02-10.csv'
+answer_filename = 'dataframe_answer_2026-02-10.csv'
+
+df_debrief = pd.read_csv(os.path.join(working_dir, 'data', debrief_filename))
+df_answer = pd.read_csv(os.path.join(working_dir, 'data', answer_filename))
 
 # Parse the JSON response column to extract ethnicity, race, and other_text
 def extract_field(response_str, field):
@@ -36,7 +40,7 @@ df_answer = df_answer.drop(columns=["ethnicity", "race", "other_text"], errors="
 df_answer = df_answer.merge(race_lookup, on="participant_id", how="left")
 
 # Save the updated answer dataframe
-df_answer.to_csv(os.path.join(working_dir, 'data', 'dataframe_answer.csv'), index=False)
+df_answer.to_csv(os.path.join(working_dir, 'data', answer_filename), index=False)
 
 print(f"Processed {len(race_lookup)} participants from debrief data.")
 print(f"Updated dataframe_answer.csv with {len(df_answer)} rows.")
