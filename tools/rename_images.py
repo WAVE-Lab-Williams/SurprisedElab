@@ -2,8 +2,8 @@ import shutil
 from collections import defaultdict
 from pathlib import Path
 
-input_folder = "needs_renaming"
-output_folder = "renamed"
+input_folder = "people_samebody_unrenamed"
+output_folder = "people_samebody"
 
 src = Path(input_folder)
 dst = Path(output_folder)

@@ -173,5 +173,4 @@ temp/
 
 # realigning images folders
 tools/align_body.py
-tools/unaligned_imgs/
-tools/aligned_imgs/
+tools/people_samebody_unrenamed.zip
