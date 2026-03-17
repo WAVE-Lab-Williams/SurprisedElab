@@ -145,6 +145,7 @@ function processTrialData(data) {
             person_race: data.person_race,
             person_sex: data.person_sex,
             person_variation: data.person_variation,
+            person_disp_duration: data.person_disp_duration,
             target_x_position: data.target_x_position,
             target_y_position: data.target_y_position,
             stimulus_duration: data.trial_duration,

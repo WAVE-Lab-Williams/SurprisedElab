@@ -96,6 +96,7 @@ function runSingleTrial(
             person_race: personRace,
             person_sex: personSex,
             person_variation: personVariation,
+            person_disp_duration: dispDuration,
             target_x_position: target_x_random,
             target_y_position: target_y_random,
         }, // data end
