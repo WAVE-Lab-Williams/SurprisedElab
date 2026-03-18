@@ -71,7 +71,8 @@ function runSingleTrial(
     console.log(`target_height: ${target_height}`)
 
 
-    var slider_start = 70;
+    // var slider_start = 70;
+    var slider_start = 20;
     var slider_min = 20;
     var slider_max = 120;
 
