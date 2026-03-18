@@ -6,11 +6,14 @@ Defining Parameter Variables
 
 var stimFolder = 'src/assets/stimuli/people_samebody/'
 
-var runIntro = true;
-var runInstr = true;
+var runIntro = false;
+var runInstr = false;
 var runExpt = true;
 var runClose = true;
 var runPreload = true;
+
+// for reproduce rectangle version
+var rectangleVer = true;
 
 // Defining Core Variables that remain constant
 var PRESTIM_DISP_TIME = 700;
