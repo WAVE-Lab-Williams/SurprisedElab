@@ -13,6 +13,7 @@ dependencies = [
     "statsmodels>=0.14.0",
     "python-dotenv>=1.1.1",
     "wave-client",
+    "matplotlib>=3.10.0",
     "pillow>=11.0.0",
 ]
 
