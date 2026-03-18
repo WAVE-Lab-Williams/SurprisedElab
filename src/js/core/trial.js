@@ -47,10 +47,15 @@ function runSingleTrial(
     };
 
     /*--------------------------- Experiment specific variables ---------------------------*/
-    var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-    var persistent_prompt = `<div style="position: fixed; top: 50px; left: 50%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to recreate the exact size of the image you just saw, to the best of your ability:</div>`;
-
-
+    if (rectangleVer == true){
+        var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
+        var sliderStim = `${stimFolder}gray_rectangle.png`
+        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to make the gray rectangle match the exact size of the image you just saw to the best of your ability. We know this is hard, do your best!</div>`;
+    } else {
+        var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
+        var sliderStim = `${stimFolder}gray_rectangle.png`
+        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to recreate the exact size of the image you just saw, to the best of your ability:</div>`;
+    }
 
     /* target image size */
     // let tar_size = randomIntFromRange(40, 100);
@@ -71,13 +76,14 @@ function runSingleTrial(
     console.log(`target_height: ${target_height}`)
 
 
-    var slider_start = 70;
+    // var slider_start = 70;
+    var slider_start = 20;
     var slider_min = 20;
     var slider_max = 120;
 
     var dispImgSlider = {
         type: jsPsychHtmlSliderResponseResizing,
-        stimulus: `<img src="${thisStim}" />`,
+        stimulus: `<img src="${sliderStim}" />`,
         slider_start: slider_start,
         min: slider_min,
         max: slider_max,
