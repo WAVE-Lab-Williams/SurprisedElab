@@ -239,10 +239,10 @@ EXPERIMENT SECTION (*sec_expt)
 
 /* -------- defining factors && exptdesign (*factors) --------*/
 
-var poss_people_race = ["B"];
-var poss_people_sex = ["M"];
+var poss_people_race = ["A","B","L","W"]
+var poss_people_sex = ["M","F"];
 var poss_people_variation = ["1","2","3","4","5"];
-var poss_disp_duration = [500];
+var poss_disp_duration = [200,500];
 
 var factors = {
     people_race: poss_people_race,
@@ -262,6 +262,8 @@ for (var i = 0; i < poss_people_race.length; i++) {
         } // end k loop
     } // end j loop
 } // end i loop
+
+forPreload.push(`${stimFolder}gray_rectangle.png`);
 
 /* ------- timeline expt push (*pushExpt ) -------------- */
 // for (var elem = 0; elem < full_design.length; elem++) {

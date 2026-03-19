@@ -12,6 +12,9 @@ var runExpt = true;
 var runClose = true;
 var runPreload = true;
 
+// for reproduce rectangle version
+var rectangleVer = true;
+
 // Defining Core Variables that remain constant
 var PRESTIM_DISP_TIME = 700;
 var FIXATION_DISP_TIME = 500;

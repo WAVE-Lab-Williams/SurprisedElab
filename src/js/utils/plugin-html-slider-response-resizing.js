@@ -108,9 +108,9 @@ var jsPsychHtmlSliderResponseResizing = (function (jspsych) {
     }
     trial(display_element, trial) {
       var half_thumb_width = 7.5;
-      var html = '<div id="jspsych-html-slider-response-wrapper" style="margin: 100px 0px;">';
+      var html = '<div id="jspsych-html-slider-response-wrapper" style="margin: 0px 0px;">';
       html += '<div id="jspsych-html-slider-response-stimulus" style="transition: transform 0.1s ease;">' + trial.stimulus + "</div>";
-      html += '<div class="jspsych-html-slider-response-container" style="position:relative; margin: 0 auto 3em auto; ';
+      html += '<div class="jspsych-html-slider-response-container" style="position:relative; margin: 0 auto 0.5em auto;';
       if (trial.slider_width !== null) {
         html += "width:" + trial.slider_width + "px;";
       } else {
@@ -153,6 +153,15 @@ var jsPsychHtmlSliderResponseResizing = (function (jspsych) {
 
       // Set initial size based on slider_start value
       updateStimulusSize(trial.slider_start);
+
+      // Fix bottom margin to always reserve space for the max scale (120),
+      // so the slider never shifts position as the image grows.
+      const stimulusElement = display_element.querySelector("#jspsych-html-slider-response-stimulus");
+      const maxOverflow = (trial.max / 100 - 1) * stimulusElement.offsetHeight / 2;
+      if (maxOverflow > 0) {
+        stimulusElement.style.marginTop = `${maxOverflow}px`;
+        stimulusElement.style.marginBottom = `${maxOverflow-10}px`;
+      }
 
       // Update size when slider moves
       const sliderElement = display_element.querySelector("#jspsych-html-slider-response-response");
