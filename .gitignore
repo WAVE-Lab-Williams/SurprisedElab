@@ -171,6 +171,7 @@ tools/data/*
 temp/
 !.gitkeep
 
-# realigning images folders
+# realigning images folders + extra files for distribution
 tools/align_body.py
 tools/people_samebody_unrenamed.zip
+tools/run_analyze_experiment.ipynb
