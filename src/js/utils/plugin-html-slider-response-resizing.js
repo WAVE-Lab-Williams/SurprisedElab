@@ -109,7 +109,7 @@ var jsPsychHtmlSliderResponseResizing = (function (jspsych) {
     trial(display_element, trial) {
       var half_thumb_width = 7.5;
       var html = '<div id="jspsych-html-slider-response-wrapper" style="margin: 0px 0px;">';
-      html += '<div id="jspsych-html-slider-response-stimulus" style="transition: transform 0.1s ease;">' + trial.stimulus + "</div>";
+      html += '<div id="jspsych-html-slider-response-stimulus" style="transition: transform 0.1s ease; pointer-events: none;">' + trial.stimulus + "</div>";
       html += '<div class="jspsych-html-slider-response-container" style="position:relative; margin: 0 auto 0.5em auto;';
       if (trial.slider_width !== null) {
         html += "width:" + trial.slider_width + "px;";
@@ -134,7 +134,7 @@ var jsPsychHtmlSliderResponseResizing = (function (jspsych) {
       if (trial.prompt !== null) {
         html += trial.prompt;
       }
-      html += '<button id="jspsych-html-slider-response-next" class="jspsych-btn" ' + (trial.require_movement ? "disabled" : "") + ">" + trial.button_label + "</button>";
+      html += '<button id="jspsych-html-slider-response-next" class="jspsych-btn" ' + (trial.require_movement ? "disabled" : "") + ' style="position: relative; z-index: 1;">' + trial.button_label + "</button>";
       display_element.innerHTML = html;
 
       var response = {
