@@ -109,7 +109,53 @@ function runSingleTrial(
         on_finish: function(data){
             data.thisDifference = data.response - tar_size
         } // on finish end
-    }; // dispCircle end
+    }; // dispImgSlider end
+
+    
+    var choiceArray = shuffle(["Looked Male", "Looked Female"])
+    var sexJudge = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `<p>What was the <b>gender</b> of person in the image that you saw?</p>`,
+        choices: choiceArray,
+        button_html: '<button class="jspsych-btn" style="font-size: 2.4vh;">%choice%</button>',
+        data: {
+            trial_category: 'judge'+trialType,
+            trial_stimulus: thisStim,
+            correct_gender: personSex,
+            person_race: personRace,
+            person_sex: personSex,
+            person_variation: personVariation,
+            person_disp_duration: dispDuration,
+            target_x_position: target_x_random,
+            target_y_position: target_y_random,
+            choice_array_order: choiceArray,
+        },
+        on_finish: function(data){
+            // console.log(data.response)
+            // console.log(choiceArray)
+            // console.log(choiceArray[parseInt(data.response,10)])
+            if (data.correct_gender == "M"){
+                if (choiceArray[parseInt(data.response,10)] == "Looked Male"){
+                    data.thisAcc = 1
+                } else if (choiceArray[parseInt(data.response,10)] == "Looked Female"){
+                    data.thisAcc = 0
+                } else {
+                    data.thisAcc = 98
+                }
+            } else if (data.correct_gender == "F"){
+                if (choiceArray[parseInt(data.response,10)] == "Looked Male"){
+                    data.thisAcc = 0
+                } else if (choiceArray[parseInt(data.response,10)] == "Looked Female"){
+                    data.thisAcc = 1
+                } else {
+                    data.thisAcc = 98
+                }
+            } else {
+                data.thisAcc == 99
+            }
+            return 
+        } // on_finish end
+    } // sexJudge end
 
     var dispImg = {
         type: jsPsychHtmlKeyboardResponse,
@@ -169,6 +215,7 @@ function runSingleTrial(
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(dispImgSlider);
+    timelineTrialsToPush.push(sexJudge);
 
 
 }
