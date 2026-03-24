@@ -49,11 +49,11 @@ function runSingleTrial(
     /*--------------------------- Experiment specific variables ---------------------------*/
     if (rectangleVer == true){
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var sliderStim = `${stimFolder}gray_rectangle.png`
+        var sliderStim = `${stimFolder}gray_rounded.png`
         var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to make the gray rectangle match the exact size of the image you just saw to the best of your ability. We know this is hard, do your best! (The "Continue" button is at the bottom of the page)</div>`;
     } else {
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var sliderStim = `${stimFolder}gray_rectangle.png`
+        var sliderStim = thisStim
         var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to recreate the exact size of the image you just saw, to the best of your ability. Do your best! (The "Continue" button is at the bottom of the page)</div>`;
     }
 

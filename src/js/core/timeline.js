@@ -265,7 +265,7 @@ for (var i = 0; i < poss_people_race.length; i++) {
     } // end j loop
 } // end i loop
 
-forPreload.push(`${stimFolder}gray_rectangle.png`);
+forPreload.push(`${stimFolder}gray_rounded.png`);
 
 /* ------- timeline expt push (*pushExpt ) -------------- */
 // for (var elem = 0; elem < full_design.length; elem++) {
