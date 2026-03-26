@@ -241,8 +241,8 @@ EXPERIMENT SECTION (*sec_expt)
 
 // var poss_people_race = ["A","B","L","W"]
 // var poss_people_sex = ["M","F"];
-var poss_people_race = ["W","L"]
-var poss_people_sex = ["M"];
+var poss_people_race = ["L"]
+var poss_people_sex = ["F"];
 var poss_people_variation = ["1","2","3","4","5"];
 var poss_disp_duration = [500];
 
