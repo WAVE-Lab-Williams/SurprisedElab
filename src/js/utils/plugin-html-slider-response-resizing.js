@@ -73,6 +73,11 @@ var jsPsychHtmlSliderResponseResizing = (function (jspsych) {
       response_ends_trial: {
         type: jspsych.ParameterType.BOOL,
         default: true
+      },
+      /** If true, pressing the Enter key will submit the response (equivalent to clicking the continue button). */
+      enter_to_continue: {
+        type: jspsych.ParameterType.BOOL,
+        default: false
       }
     },
     data: {
@@ -172,8 +177,12 @@ var jsPsychHtmlSliderResponseResizing = (function (jspsych) {
         updateStimulusSize(e.target.valueAsNumber);
       });
 
+      var slider_has_moved = false;
+      var keyHandler = null;
+
       if (trial.require_movement) {
         const enable_button = () => {
+          slider_has_moved = true;
           display_element.querySelector(
             "#jspsych-html-slider-response-next"
           ).disabled = false;
@@ -184,6 +193,10 @@ var jsPsychHtmlSliderResponseResizing = (function (jspsych) {
       }
 
       const end_trial = () => {
+        if (keyHandler !== null) {
+          document.removeEventListener("keydown", keyHandler);
+          keyHandler = null;
+        }
         var trialdata = {
           rt: response.rt,
           stimulus: trial.stimulus,
@@ -205,6 +218,21 @@ var jsPsychHtmlSliderResponseResizing = (function (jspsych) {
           ).disabled = true;
         }
       });
+
+      if (trial.enter_to_continue) {
+        keyHandler = (e) => {
+          if (e.key === "Enter") {
+            if (trial.require_movement && !slider_has_moved) {
+              return;
+            }
+            const btn = display_element.querySelector("#jspsych-html-slider-response-next");
+            if (btn && !btn.disabled) {
+              btn.click();
+            }
+          }
+        };
+        document.addEventListener("keydown", keyHandler);
+      }
 
       if (trial.stimulus_duration !== null) {
         this.jsPsych.pluginAPI.setTimeout(() => {

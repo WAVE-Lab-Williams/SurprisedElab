@@ -56,8 +56,9 @@ function randomChoiceIndex(arrayLength, numChoices) {
     return selectedIndexes
 }
 
-function randomIntFromRange(min, max) { // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min)
+function randomIntFromRange(min, max, increment = 1) { // min and max included
+    const steps = Math.floor((max - min) / increment)
+    return min + Math.floor(Math.random() * (steps + 1)) * increment
 }
 
 function cutArray(array, cutAfterIndex) {
