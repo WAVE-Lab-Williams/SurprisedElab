@@ -8,6 +8,7 @@ function runSingleTrial(
     personSex,
     personVariation,
     dispDuration,
+    trueTrialCounter,
     timelineTrialsToPush,
     trialType,
 ) {
@@ -50,16 +51,18 @@ function runSingleTrial(
     if (rectangleVer == true){
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
         var sliderStim = `${stimFolder}gray_rectangle.png`
-        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to make the gray rectangle match the exact size of the image you just saw to the best of your ability. We know this is hard, do your best! (The "Continue" button is at the bottom of the page)</div>`;
+        // var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to make the gray rectangle match the exact size of the image you just saw to the best of your ability. We know this is hard, do your best! (The "Continue" button is at the bottom of the page)</div>`;
+        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the size of the image</div>`;
     } else {
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var sliderStim = thisStim
+        var sliderStim = `${stimFolder}gray_rectangle.png`
         var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to recreate the exact size of the image you just saw, to the best of your ability. Do your best! (The "Continue" button is at the bottom of the page)</div>`;
     }
 
     /* target image size */
-    // let tar_size = randomIntFromRange(40, 100);
-    let tar_size = 100;
+    // let tar_size = randomIntFromRange(40, 100); // default increment is 1
+    let tar_size = randomIntFromRange(40, 100, 5) // increment by 5
+    // let tar_size = 100;
     let resize_decimal = tar_size*.01;
 
     let target_width = Math.floor(imgWidth * resize_decimal);
@@ -91,6 +94,9 @@ function runSingleTrial(
         labels: ["smallest","largest"],
         trial_duration: null,
         response_ends_trial: true,
+        enter_to_continue: true,
+        require_movement: true,
+        button_label: "Press Enter or Click to Continue",
         prompt: `${persistent_prompt}`,
         data: {
             trial_category: 'answer'+trialType,
@@ -103,6 +109,7 @@ function runSingleTrial(
             person_sex: personSex,
             person_variation: personVariation,
             person_disp_duration: dispDuration,
+            true_trial_counter: trueTrialCounter,
             target_x_position: target_x_random,
             target_y_position: target_y_random,
         }, // data end
@@ -126,6 +133,7 @@ function runSingleTrial(
             person_sex: personSex,
             person_variation: personVariation,
             person_disp_duration: dispDuration,
+            true_trial_counter: trueTrialCounter,
             target_x_position: target_x_random,
             target_y_position: target_y_random,
             choice_array_order: choiceArray,
@@ -215,7 +223,7 @@ function runSingleTrial(
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(dispImgSlider);
-    timelineTrialsToPush.push(sexJudge);
+    // timelineTrialsToPush.push(sexJudge);
 
 
 }
