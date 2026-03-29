@@ -61,7 +61,7 @@ function runSingleTrial(
 
     /* target image size */
     // let tar_size = randomIntFromRange(40, 100); // default increment is 1
-    let tar_size = randomIntFromRange(40, 100, 5) // increment by 5
+    let tar_size = randomIntFromRange(50, 100, 5) // increment by 5
     // let tar_size = 100;
     let resize_decimal = tar_size*.01;
 
@@ -194,7 +194,8 @@ function runSingleTrial(
 
      var poststim = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: `${persistent_prompt}`,
+        prompt: `${persistent_prompt}`,
+        stimulus: ``,
         choices: "NO_KEYS",
         trial_duration: POSTSTIM_DISP_TIME,
         data: {
