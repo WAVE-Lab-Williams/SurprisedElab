@@ -8,7 +8,7 @@ function runSingleTrial(
     personSex,
     personVariation,
     dispDuration,
-    trueTrialCounter,
+    trueTrialCount,
     timelineTrialsToPush,
     trialType,
 ) {
@@ -109,7 +109,7 @@ function runSingleTrial(
             person_sex: personSex,
             person_variation: personVariation,
             person_disp_duration: dispDuration,
-            true_trial_counter: trueTrialCounter,
+            true_trial_count: trueTrialCount,
             target_x_position: target_x_random,
             target_y_position: target_y_random,
         }, // data end
@@ -133,7 +133,7 @@ function runSingleTrial(
             person_sex: personSex,
             person_variation: personVariation,
             person_disp_duration: dispDuration,
-            true_trial_counter: trueTrialCounter,
+            true_trial_count: trueTrialCount,
             target_x_position: target_x_random,
             target_y_position: target_y_random,
             choice_array_order: choiceArray,
