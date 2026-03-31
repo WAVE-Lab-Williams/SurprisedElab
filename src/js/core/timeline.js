@@ -243,7 +243,7 @@ EXPERIMENT SECTION (*sec_expt)
 
 var poss_people_race = ["W"]
 // var poss_people_sex = ["M","F"];
-// var poss_people_race = randomChoice(["A","B","L","W"], 1)[0];
+// var poss_people_race = randomChoice(["A","B","L","W"], 1);
 var poss_people_sex = ["F","M"];
 var poss_people_variation = ["1","4","5"]; // WF 3 and 2 are the worst WFs
 var poss_disp_duration = [500,900];

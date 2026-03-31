@@ -175,4 +175,3 @@ temp/
 tools/align_body.py
 tools/people_samebody_unrenamed.zip
 tools/run_analyze_experiment.ipynb
-true_trial_count.py
