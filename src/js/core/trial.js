@@ -80,9 +80,9 @@ function runSingleTrial(
 
 
     // var slider_start = 70;
-    var slider_start = 20;
-    var slider_min = 20;
-    var slider_max = 120;
+    var slider_start = 0;
+    var slider_min = 0;
+    var slider_max = 100;
 
     var dispImgSlider = {
         type: jsPsychHtmlSliderResponseResizing,
@@ -117,6 +117,45 @@ function runSingleTrial(
             data.thisDifference = data.response - tar_size
         } // on finish end
     }; // dispImgSlider end
+
+    var dispSpacingResponse = {
+        type: jsPsychHtmlSliderSpacing,
+        anchor_stimulus: `<img src="${sliderStim}" style="width:${imgWidth/2}px;" />`,
+        secondary_stimulus: `<img src="${sliderStim}" style="width:${imgWidth/2}px;"  />`,
+        anchor_stimulus_width: imgWidth/2,
+        secondary_stimulus_width: imgWidth/2,
+        set_distance_pixel_max: 900,
+        slider_start: slider_start,
+        min: slider_min,
+        max: slider_max,
+        slider_width: 500,
+        labels: ["closest","farthest"],
+        trial_duration: null,
+        response_ends_trial: true,
+        enter_to_continue: true,
+        require_movement: true,
+        button_label: "Press Enter or Click to Continue",
+        prompt: `${persistent_prompt}`,
+        data: {
+            trial_category: 'answer'+trialType,
+            trial_stimulus: thisStim,
+            correct_response: tar_size,
+            slider_start: slider_start,
+            min: slider_min,
+            max: slider_max,
+            person_race: personRace,
+            person_sex: personSex,
+            person_variation: personVariation,
+            person_disp_duration: dispDuration,
+            true_trial_count: trueTrialCount,
+            target_x_position: target_x_random,
+            target_y_position: target_y_random,
+        }, // data end
+        on_finish: function(data){
+            data.thisDifference = data.response - tar_size
+        } // on finish end
+    }; // dispImgSlider end
+
 
     
     var choiceArray = shuffle(["Looked Male", "Looked Female"])
@@ -223,7 +262,7 @@ function runSingleTrial(
     timelineTrialsToPush.push(dispImg);
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
-    timelineTrialsToPush.push(dispImgSlider);
+    timelineTrialsToPush.push(dispSpacingResponse);
     // timelineTrialsToPush.push(sexJudge);
 
 
