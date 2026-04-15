@@ -4,16 +4,16 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/people_samebody/'
+var stimFolder = 'src/assets/stimuli/people_samebody_cropped/'
 
-var runIntro = true;
+var runIntro = false;
 var runInstr = true;
 var runExpt = true;
 var runClose = true;
 var runPreload = true;
 
 // for reproduce rectangle version
-var rectangleVer = true;
+var rectangleVer = false;
 
 // Defining Core Variables that remain constant
 var PRESTIM_DISP_TIME = 700;
@@ -49,9 +49,9 @@ var h =
     document.body.clientHeight;
 
 // setting display image width
-var origWidth = 250;
+var origWidth = 164;
 var origHeight = 545;
-var imgWidth = origWidth; // your desired display img width
+var imgWidth = 150; // your desired display img width
 var imgHeight = (imgWidth / origWidth) * origHeight;
 
 
