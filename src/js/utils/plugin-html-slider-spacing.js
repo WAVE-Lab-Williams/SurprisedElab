@@ -98,11 +98,17 @@ var jsPsychHtmlSliderSpacing = (function (jspsych) {
       enter_to_continue: {
         type: jspsych.ParameterType.BOOL,
         default: false
+      },
+      /** Height in pixels of the tallest image. The stage (and thus the slider/button below it) will be at least this tall, preventing overlap. */
+      tallest_img_height: {
+        type: jspsych.ParameterType.INT,
+        default: 200
       }
     },
     data: {
       rt: { type: jspsych.ParameterType.INT },
       response: { type: jspsych.ParameterType.INT },
+      distance_px: { type: jspsych.ParameterType.FLOAT },
       anchor_stimulus: { type: jspsych.ParameterType.HTML_STRING },
       secondary_stimulus: { type: jspsych.ParameterType.HTML_STRING },
       slider_start: { type: jspsych.ParameterType.INT }
@@ -130,9 +136,9 @@ var jsPsychHtmlSliderSpacing = (function (jspsych) {
 
       var html = '<div id="jspsych-html-slider-spacing-wrapper" style="margin: 0px 0px;">';
 
-      html += `<div id="jspsych-html-slider-spacing-stage" style="position: relative; ${stageWidth_style} height: 200px; margin-bottom: 1em;">`;
+      html += `<div id="jspsych-html-slider-spacing-stage" style="position: relative; ${stageWidth_style} height: ${trial.tallest_img_height}px; margin-bottom: 1em;">`;
 
-      html += `<div id="jspsych-html-slider-spacing-anchor" style="position: absolute; left: 10%; top: 50%; transform: translateY(-50%); width: ${trial.anchor_stimulus_width}px;">`;
+      html += `<div id="jspsych-html-slider-spacing-anchor" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: ${trial.anchor_stimulus_width}px;">`;
       html += trial.anchor_stimulus;
       html += '</div>';
 
@@ -182,8 +188,7 @@ var jsPsychHtmlSliderSpacing = (function (jspsych) {
         const stageWidth = trial.set_distance_pixel_max !== false
           ? trial.set_distance_pixel_max
           : stageEl.offsetWidth;
-        const anchorLeftPx = stageWidth * 0.10;
-        const minLeft = anchorLeftPx + trial.anchor_stimulus_width;
+        const minLeft = trial.anchor_stimulus_width;
         const maxLeft = stageWidth - trial.secondary_stimulus_width;
         const range = effectiveMax - trial.min;
         const t = range > 0 ? (value - trial.min) / range : 0;
@@ -220,12 +225,19 @@ var jsPsychHtmlSliderSpacing = (function (jspsych) {
           document.removeEventListener('keydown', keyHandler);
           keyHandler = null;
         }
+        const stageWidth = trial.set_distance_pixel_max !== false
+          ? trial.set_distance_pixel_max
+          : stageEl.offsetWidth;
+        const range = effectiveMax - trial.min;
+        const t = range > 0 ? (response.response - trial.min) / range : 0;
+        const distance_px = t * (stageWidth - trial.anchor_stimulus_width - trial.secondary_stimulus_width);
         this.jsPsych.finishTrial({
           rt: response.rt,
           anchor_stimulus: trial.anchor_stimulus,
           secondary_stimulus: trial.secondary_stimulus,
           slider_start: trial.slider_start,
-          response: response.response
+          response: response.response,
+          distance_px: distance_px
         });
       };
 
