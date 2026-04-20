@@ -84,6 +84,15 @@ function runSingleTrial(
     let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-imgWidth-50); // accounts for img dims to not go off screen
     let anchor_y_random = randomIntFromRange(50, h-imgHeight-50);
 
+    /* calculate categorical location of where anchor image is */
+    if (anchor_x_random < w/2) {
+        var screenside_category = "L"
+    } else if (anchor_x_random >= w/2) {
+        var screenside_category = "R"
+    } else {
+        var screenside_category = "Error"
+    }
+
     // var slider_start = 70;
     var slider_start = 0;
     var slider_min = 0;
@@ -93,6 +102,9 @@ function runSingleTrial(
     } else {
         var max_distance = w
     }
+    
+    //MAKE PERSON SHOW UP 200 MS FIRST
+    //
 
     var dispSpacingResponse = {
         type: jsPsychHtmlSliderSpacing,
@@ -130,6 +142,7 @@ function runSingleTrial(
             anchor_x_position: anchor_x_random,
             anchor_y_position: anchor_y_random,
             secondary_x_position: anchor_x_random + objDistance,
+            screenside_category: screenside_category,
         }, // data end
         on_finish: function(data){
             data.thisDifference = data.distance_px - objDistance

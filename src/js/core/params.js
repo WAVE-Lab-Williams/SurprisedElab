@@ -6,7 +6,7 @@ Defining Parameter Variables
 
 var stimFolder = 'src/assets/stimuli/people_samebody_cropped/'
 
-var runIntro = false;
+var runIntro = true;
 var runInstr = true;
 var runExpt = true;
 var runClose = true;
