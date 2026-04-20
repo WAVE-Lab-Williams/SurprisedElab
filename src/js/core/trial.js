@@ -103,8 +103,7 @@ function runSingleTrial(
         var max_distance = w
     }
     
-    //MAKE PERSON SHOW UP 200 MS FIRST
-    //
+    console.log(objDistance);
 
     var dispSpacingResponse = {
         type: jsPsychHtmlSliderSpacing,
@@ -199,6 +198,19 @@ function runSingleTrial(
         } // on_finish end
     } // sexJudge end
 
+    var dispPerson = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random}px;">`+
+            `<img src="${thisStim}" style="width:${imgWidth}px;" />` + 
+            `</div> `,
+        choices: "NO_KEYS",
+        trial_duration: PERSON_DISP_TIME,
+        // prompt: `${persistent_prompt}`,
+        data: {
+            trial_category: 'dispPerson'+trialType,
+        }, // data end
+    }; // dispImg end
+
     var dispImg = {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random}px;">`+
@@ -257,6 +269,7 @@ function runSingleTrial(
     timelineTrialsToPush.push(cursor_off);
     timelineTrialsToPush.push(prestim);
     timelineTrialsToPush.push(fixation);
+    timelineTrialsToPush.push(dispPerson);
     timelineTrialsToPush.push(dispImg);
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
