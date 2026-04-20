@@ -84,6 +84,15 @@ function runSingleTrial(
     let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-imgWidth-50); // accounts for img dims to not go off screen
     let anchor_y_random = randomIntFromRange(50, h-imgHeight-50);
 
+    /* calculate categorical location of where anchor image is */
+    if (anchor_x_random < w/2) {
+        var screenside_category = "L"
+    } else if (anchor_x_random >= w/2) {
+        var screenside_category = "R"
+    } else {
+        var screenside_category = "Error"
+    }
+
     // var slider_start = 70;
     var slider_start = 0;
     var slider_min = 0;
@@ -93,6 +102,8 @@ function runSingleTrial(
     } else {
         var max_distance = w
     }
+    
+    console.log(objDistance);
 
     var dispSpacingResponse = {
         type: jsPsychHtmlSliderSpacing,
@@ -130,6 +141,7 @@ function runSingleTrial(
             anchor_x_position: anchor_x_random,
             anchor_y_position: anchor_y_random,
             secondary_x_position: anchor_x_random + objDistance,
+            screenside_category: screenside_category,
         }, // data end
         on_finish: function(data){
             data.thisDifference = data.distance_px - objDistance
@@ -185,6 +197,19 @@ function runSingleTrial(
             return 
         } // on_finish end
     } // sexJudge end
+
+    var dispPerson = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random}px;">`+
+            `<img src="${thisStim}" style="width:${imgWidth}px;" />` + 
+            `</div> `,
+        choices: "NO_KEYS",
+        trial_duration: PERSON_DISP_TIME,
+        // prompt: `${persistent_prompt}`,
+        data: {
+            trial_category: 'dispPerson'+trialType,
+        }, // data end
+    }; // dispImg end
 
     var dispImg = {
         type: jsPsychHtmlKeyboardResponse,
@@ -244,6 +269,7 @@ function runSingleTrial(
     timelineTrialsToPush.push(cursor_off);
     timelineTrialsToPush.push(prestim);
     timelineTrialsToPush.push(fixation);
+    timelineTrialsToPush.push(dispPerson);
     timelineTrialsToPush.push(dispImg);
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);

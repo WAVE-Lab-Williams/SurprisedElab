@@ -4,9 +4,9 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/people_samebody_cropped/'
+var stimFolder = 'src/assets/stimuli/people_samebody_shadow/'
 
-var runIntro = false;
+var runIntro = true;
 var runInstr = true;
 var runExpt = true;
 var runClose = true;
@@ -19,6 +19,7 @@ var rectangleVer = false;
 var PRESTIM_DISP_TIME = 700;
 var FIXATION_DISP_TIME = 500;
 var POSTSTIM_DISP_TIME = 500;
+var PERSON_DISP_TIME = 200;
 
 // Variables for Participant Information
 var estTotalRunTime = 6;
