@@ -1,8 +1,8 @@
 from PIL import Image
 import os
 
-src = "c:/Users/inkpe/local-JS-Williams/SurprisedElab/src/assets/stimuli/people_samebody_shadow/uncropped"
-dst = "c:/Users/inkpe/local-JS-Williams/SurprisedElab/src/assets/stimuli/people_samebody_shadow"
+src = "c:/Users/inkpe/local-JS-Williams/SurprisedElab/src/assets/stimuli/pre-crop"
+dst = "c:/Users/inkpe/local-JS-Williams/SurprisedElab/src/assets/stimuli/pre-crop/post-crop"
 os.makedirs(dst, exist_ok=True)
 
 files = [f for f in os.listdir(src) if f.endswith('.png')]

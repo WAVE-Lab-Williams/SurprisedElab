@@ -172,7 +172,7 @@ var demo_display_durations = [800];
 var demo_obj_distance = [350];
 
 forPreload.push(`${stimFolder}${demo_image_race[0]}${demo_image_sex[0]}-${demo_image_variation[0]}.png`);
-forPreload.push(`${stimFolder}table1prac.png`);
+forPreload.push(`${stimFolder}table1brownprac.png`);
 
 //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
 var thisDemoDispDuration = randomChoice(demo_display_durations,1)[0];
@@ -248,7 +248,7 @@ var poss_people_race = ["W"]
 // var poss_people_sex = ["M","F"];
 // var poss_people_race = randomChoice(["A","B","L","W"], 1);
 var poss_people_sex = ["F","M"];
-var poss_people_variation = ["1","4","5"]; // WF 3 and 2 are the worst WFs
+var poss_people_variation = ["1","2","4","5"]; // WF 3 and 2 are the worst WFs
 var poss_disp_duration = [500,900];
 var poss_obj_distance = [200,300,400]
 
@@ -260,7 +260,7 @@ var factors = {
     obj_distance: poss_obj_distance
 }
 
-var full_design = jsPsych.randomization.factorial(factors, 3);
+var full_design = jsPsych.randomization.factorial(factors, 1);
 console.log(full_design);
 
 /* -------  Set Preload Images for Expt (*preload_expt) -------------- */
@@ -273,7 +273,7 @@ for (var i = 0; i < poss_people_race.length; i++) {
 } // end i loop
 
 forPreload.push(`${stimFolder}gray_rectangle.png`);
-forPreload.push(`${stimFolder}table1expt.png`);
+forPreload.push(`${stimFolder}table1brownexpt.png`);
 
 /* ------- timeline expt push (*pushExpt ) -------------- */
 for (var elem = 0; elem < full_design.length; elem++) {

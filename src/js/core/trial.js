@@ -51,13 +51,13 @@ function runSingleTrial(
     /*--------------------------- Experiment specific variables ---------------------------*/
     if (rectangleVer == true){
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var objectStim = `${stimFolder}table1${trialType}.png`
+        var objectStim = `${stimFolder}table1brown${trialType}.png`
         var sliderStim = `${stimFolder}gray_rectangle.png`
         // var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to make the gray rectangle match the exact size of the image you just saw to the best of your ability. We know this is hard, do your best! (The "Continue" button is at the bottom of the page)</div>`;
         var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the distance between the two images you saw</div>`;
     } else {
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var objectStim = `${stimFolder}table1${trialType}.png`
+        var objectStim = `${stimFolder}table1brown${trialType}.png`
         var sliderStim = thisStim
         var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to recreate the distance between the two images you saw, to the best of your ability. Do your best! (The "Continue" button is at the bottom of the page)</div>`;
     }
