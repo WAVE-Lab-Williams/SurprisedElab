@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/people_samebody/'
+var stimFolder = 'src/assets/stimuli/people_samebody_shadow/'
 
 var runIntro = true;
 var runInstr = true;
@@ -13,12 +13,13 @@ var runClose = true;
 var runPreload = true;
 
 // for reproduce rectangle version
-var rectangleVer = true;
+var rectangleVer = false;
 
 // Defining Core Variables that remain constant
 var PRESTIM_DISP_TIME = 700;
 var FIXATION_DISP_TIME = 500;
 var POSTSTIM_DISP_TIME = 500;
+var PERSON_DISP_TIME = 200;
 
 // Variables for Participant Information
 var estTotalRunTime = 6;
@@ -49,9 +50,9 @@ var h =
     document.body.clientHeight;
 
 // setting display image width
-var origWidth = 250;
+var origWidth = 164;
 var origHeight = 545;
-var imgWidth = origWidth; // your desired display img width
+var imgWidth = 150; // your desired display img width
 var imgHeight = (imgWidth / origWidth) * origHeight;
 
 
