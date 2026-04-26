@@ -132,7 +132,7 @@ function runSingleTrial(
             min: slider_min,
             max: slider_max,
             max_slider_pixel_distance: max_distance,
-            person_race: personRace,
+            person_race: personRace, 
             person_sex: personSex,
             person_variation: personVariation,
             person_disp_duration: dispDuration,
@@ -144,7 +144,8 @@ function runSingleTrial(
             screenside_category: screenside_category,
         }, // data end
         on_finish: function(data){
-            data.thisDifference = data.distance_px - objDistance
+            // objDistance is left-to-left between stimuli; distance_px is the edge-to-edge gap (excludes anchor width), so subtract imgWidth to compare on the same scale
+            data.thisDifference = data.distance_px - (objDistance - imgWidth)
         } // on finish end
     }; // dispImgSlider end
 
