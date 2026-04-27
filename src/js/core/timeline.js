@@ -248,9 +248,9 @@ var poss_people_race = ["W"]
 // var poss_people_sex = ["M","F"];
 // var poss_people_race = randomChoice(["A","B","L","W"], 1);
 var poss_people_sex = ["F","M"];
-var poss_people_variation = ["1","2","4","5"]; // WF 3 and 2 are the worst WFs
+var poss_people_variation = ["1","4","5"]; // WF 3 and 2 are the worst WFs
 var poss_disp_duration = [500,900];
-var poss_obj_distance = [200,300,400]
+var poss_obj_distance = [210,300,390];
 
 var factors = {
     people_race: poss_people_race,
@@ -274,15 +274,17 @@ for (var i = 0; i < poss_people_race.length; i++) {
 
 forPreload.push(`${stimFolder}gray_rectangle.png`);
 forPreload.push(`${stimFolder}table1brownexpt.png`);
+var jitter_distance_amount;
 
 /* ------- timeline expt push (*pushExpt ) -------------- */
 for (var elem = 0; elem < full_design.length; elem++) {
 // for (var elem = 0; elem < 1; elem++) {
+    jitter_distance_amount = randomIntFromRange(-20,20,10); // Make sure to check that these make sense with your possible distances
     runSingleTrial(
         full_design[elem].people_race,
         full_design[elem].people_sex,
         full_design[elem].people_variation,
-        full_design[elem].obj_distance,
+        full_design[elem].obj_distance+jitter_distance_amount,
         full_design[elem].disp_duration,
         elem,
         timelineexpt,
