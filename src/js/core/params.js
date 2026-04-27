@@ -19,7 +19,7 @@ var rectangleVer = false;
 var PRESTIM_DISP_TIME = 700;
 var FIXATION_DISP_TIME = 500;
 var POSTSTIM_DISP_TIME = 500;
-var PERSON_DISP_TIME = 200;
+var PERSON_DISP_TIME = 300;
 
 // Variables for Participant Information
 var estTotalRunTime = 6;
