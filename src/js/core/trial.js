@@ -59,7 +59,7 @@ function runSingleTrial(
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
         var objectStim = `${stimFolder}table1brown${trialType}.png`
         var sliderStim = thisStim
-        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to recreate the distance between the two images you saw, to the best of your ability. Do your best! (The "Continue" button is at the bottom of the page)</div>`;
+        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the distance between the two images you saw.<br>Do your best! (The "Continue" button is at the bottom of the page)</div>`;
     }
 
     /* target image size for slider resizing */
@@ -232,6 +232,17 @@ function runSingleTrial(
         }, // data end
     }; // dispImg end
 
+    var attnTrial = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `How would you describe the hairstyle you just saw?`,
+        choices: ["Short Hair", "Long Hair", "Tied Back", "Unknown"],
+        trial_duration: null,
+        // prompt: `${persistent_prompt}`,
+        data: {
+            trial_category: 'attnTrial'+trialType,
+        }
+    }
+
     var prestim = {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: "",
@@ -265,6 +276,7 @@ function runSingleTrial(
 
 
     /*--------------------------- push single trial sequence ---------------------------*/
+    var attn_trial_list = [2,7,12,17,22,27,32,37,42,47];
 
     timelineTrialsToPush.push(if_notFull);
     timelineTrialsToPush.push(cursor_off);
@@ -275,6 +287,9 @@ function runSingleTrial(
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(dispSpacingResponse);
+    if (attn_trial_list.includes(trueTrialCount)){
+        timelineTrialsToPush.push(attnTrial);
+    }
     // timelineTrialsToPush.push(sexJudge);
 
 
