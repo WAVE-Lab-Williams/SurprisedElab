@@ -55,6 +55,23 @@ def parse_participant_race(r):
     else:
         return base_race
 
+def json_field(field):
+    """Return an extractor function that pulls `field` from a JSPsych JSON response string.
+
+    The returned function takes a single response string `r` (as stored in the
+    'response' column of a debrief dataframe), evaluates it to a dict, and uses
+    pd.json_normalize to handle nested keys. Returns None for null/NaN rows or if
+    `field` is not present in the response.
+
+    Args:
+        field: Key to extract from the response dict (e.g., 'gender', 'attention').
+
+    Returns:
+        A function (str | NaN) -> scalar | None, suitable for use with .apply().
+    """
+    return lambda r: pd.json_normalize(eval(r)).get(field, pd.Series([None]))[0] if pd.notna(r) else None
+
+
 def load_environment_variables(env_file_path: str = ".env") -> Tuple[str, Optional[str], str]:
     """Load and validate environment variables."""
     pwd = os.getcwd()
