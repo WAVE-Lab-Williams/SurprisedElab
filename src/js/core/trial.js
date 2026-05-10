@@ -49,18 +49,19 @@ function runSingleTrial(
     };
 
     /*--------------------------- Experiment specific variables ---------------------------*/
-    if (rectangleVer == true){
-        var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var objectStim = `${stimFolder}table1brown${trialType}.png`
-        var sliderStim = `${stimFolder}gray_rectangle.png`
-        // var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Now use the slider below (you can click and drag the slider) to make the gray rectangle match the exact size of the image you just saw to the best of your ability. We know this is hard, do your best! (The "Continue" button is at the bottom of the page)</div>`;
-        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the distance between the two images you saw</div>`;
+    if (silhouetteResponseVer == true){
+        var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`;
+        var objectStim = `${stimFolder}table1brown${trialType}.png`;
+        var sliderStim_anchor = `${stimFolder}human-silhouetteambiguous.png`;
+        var sliderStim_object = `${stimFolder}table-response.png`;
     } else {
-        var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`
-        var objectStim = `${stimFolder}table1brown${trialType}.png`
-        var sliderStim = thisStim
-        var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the distance between the two images you saw.<br>Do your best! (The "Continue" button is at the bottom of the page)</div>`;
+        var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`;
+        var objectStim = `${stimFolder}table1brown${trialType}.png`;
+        var sliderStim_anchor = thisStim;
+        var sliderStim_object = objectStim;
     }
+    var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the distance between the two images you saw.<br>Do your best! (The "Continue" button is at the bottom of the page)</div>`;
+
 
     /* target image size for slider resizing */
     // let tar_size = randomIntFromRange(40, 100); // default increment is 1
@@ -107,8 +108,8 @@ function runSingleTrial(
 
     var dispSpacingResponse = {
         type: jsPsychHtmlSliderSpacing,
-        anchor_stimulus: `<img src="${sliderStim}" style="width:${imgWidth}px;" />`,
-        secondary_stimulus: `<img src="${objectStim}" style="width:${imgWidth}px;"  />`,
+        anchor_stimulus: `<img src="${sliderStim_anchor}" style="width:${imgWidth}px;" />`,
+        secondary_stimulus: `<img src="${sliderStim_object}" style="width:${imgWidth}px;"  />`,
         anchor_stimulus_width: imgWidth,
         secondary_stimulus_width: imgWidth,
         tallest_img_height: imgHeight,
@@ -276,7 +277,8 @@ function runSingleTrial(
 
 
     /*--------------------------- push single trial sequence ---------------------------*/
-    var attn_trial_list = [2,7,12,17,22,27,32,37,42,47];
+    // var attn_trial_list = [2,7,12,17,22,27,32,37,42,47];
+    var attn_trial_list = [2,8,14,20,26,32,38,44,50];
 
     timelineTrialsToPush.push(if_notFull);
     timelineTrialsToPush.push(cursor_off);
