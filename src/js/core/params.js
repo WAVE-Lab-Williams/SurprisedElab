@@ -22,8 +22,8 @@ var POSTSTIM_DISP_TIME = 500;
 var PERSON_DISP_TIME = 300;
 
 // Variables for Participant Information
-var estTotalRunTime = 6;
-var estDollars = 0.90;
+var estTotalRunTime = 8;
+var estDollars = 1.2;
 var participantType = 'prolific';
 var completionCode = 'CN955H3L';
 var prolific_url = 'https://app.prolific.co/submissions/complete?cc='+completionCode;
