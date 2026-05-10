@@ -13,7 +13,7 @@ var runClose = true;
 var runPreload = true;
 
 // for reproduce ambiguous silhouette version
-var silhouetteResponseVer = true;
+var silhouetteResponseVer = false;
 
 // Defining Core Variables that remain constant
 var PRESTIM_DISP_TIME = 700;
@@ -24,6 +24,8 @@ var PERSON_DISP_TIME = 300;
 // Variables for Participant Information
 var estTotalRunTime = 8;
 var estDollars = 1.2;
+
+
 var participantType = 'prolific';
 var completionCode = 'CN955H3L';
 var prolific_url = 'https://app.prolific.co/submissions/complete?cc='+completionCode;
