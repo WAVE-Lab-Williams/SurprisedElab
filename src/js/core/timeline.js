@@ -173,6 +173,8 @@ var demo_obj_distance = [350];
 
 forPreload.push(`${stimFolder}${demo_image_race[0]}${demo_image_sex[0]}-${demo_image_variation[0]}.png`);
 forPreload.push(`${stimFolder}table1brownprac.png`);
+forPreload.push(`${stimFolder}human-silhouetteambiguous.png`)
+forPreload.push(`${stimFolder}table-response.png`)
 
 //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
 var thisDemoDispDuration = randomChoice(demo_display_durations,1)[0];
