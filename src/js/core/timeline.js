@@ -246,8 +246,8 @@ EXPERIMENT SECTION (*sec_expt)
 
 /* -------- defining factors && exptdesign (*factors) --------*/
 
-var poss_people_race = ["B"];
-// var poss_people_race = randomChoice(["A","B","L"], 1);
+// var poss_people_race = ["B"];
+var poss_people_race = randomChoice(["W","L"], 1);
 var poss_people_sex = ["F","M"];
 var poss_people_variation = ["1","4","5"]; // WF 3 and 2 are the worst WFs
 var poss_disp_duration = [500,900];
