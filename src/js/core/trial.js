@@ -83,8 +83,10 @@ function runSingleTrial(
 // // console.log(`target_height: ${target_height}`)
 
     /* creating locations for images on each trial */
-    let anchor_x_random = randomIntFromRange(50, w-objDistance-objectWidth-50); // accounts for img dims to not go off screen
-    let anchor_y_random = randomIntFromRange(50, h-imgHeight-50);
+    // objDistance is the edge-to-edge gap between the anchor and object images, so the object's
+    // right edge sits at anchor_x + imgWidth + objDistance + objectWidth.
+    let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-objectWidth-50); // accounts for img dims to not go off screen
+    let anchor_y_random = randomIntFromRange(50, h-Math.max(imgHeight,objectHeight)-50);
     console.log(`Anchor position: x=${anchor_x_random}, y=${anchor_y_random}, imgWidth=${imgWidth}, imgHeight=${imgHeight}, objDistance=${objDistance}, screen w=${w}, h=${h}`);
 
 
@@ -102,12 +104,15 @@ function runSingleTrial(
     var slider_start = 0;
     var slider_min = 0;
     var slider_max = 100;
-    if (w >= 900) {
-        var max_distance = 900
-    } else {
-        var max_distance = w
-    }
-    
+    // Stage must be wide enough to fit the anchor + object images plus the largest true gap
+    // (maxPossibleGap, params.js), with extra room so participants can over/undershoot on the slider.
+    // FYI original experiment with the 150 imgWidth actually had leftover overshoot_room of 340px, 
+    // just because of the sizes and that I had hardcoded a max size of the slider.
+    // Keeping it at 340 for now. Do know that if we change the overshoot to be smaller, than each
+    // pixel of movement that the participant makes along the slider means MORE px-per-unit sensitivity.
+    var slider_overshoot_room = 340;
+    var max_distance = Math.min(w, imgWidth+objectWidth+maxPossibleGap+slider_overshoot_room);
+
     console.log(objDistance);
 
     var dispSpacingResponse = {
@@ -116,7 +121,7 @@ function runSingleTrial(
         secondary_stimulus: `<img src="${sliderStim_object}" style="width:${objectWidth}px;"  />`,
         anchor_stimulus_width: imgWidth,
         secondary_stimulus_width: objectWidth,
-        tallest_img_height: objectHeight,
+        tallest_img_height: Math.max(imgHeight,objectHeight), //no longer have to update this variable, will simply select the variable's height that is taller.
         set_distance_pixel_max: max_distance,
         slider_start: slider_start,
         min: slider_min,
@@ -145,12 +150,12 @@ function runSingleTrial(
             true_trial_count: trueTrialCount,
             anchor_x_position: anchor_x_random,
             anchor_y_position: anchor_y_random,
-            secondary_x_position: anchor_x_random + objDistance,
+            secondary_x_position: anchor_x_random + imgWidth + objDistance,
             screenside_category: screenside_category,
         }, // data end
         on_finish: function(data){
-            // objDistance is left-to-left between stimuli; distance_px is the edge-to-edge gap (excludes anchor width), so subtract imgWidth to compare on the same scale
-            data.thisDifference = data.distance_px - (objDistance - imgWidth)
+            // objDistance and distance_px are both the edge-to-edge gap, so they compare directly
+            data.thisDifference = data.distance_px - objDistance
         } // on finish end
     }; // dispImgSlider end
 
@@ -221,9 +226,9 @@ function runSingleTrial(
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random}px;">`+
             `<img src="${thisStim}" style="width:${imgWidth}px;" />` + 
-            `</div> ` + 
-            `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random + objDistance}px;">`+
-            `<img src="${objectStim}" style="width:${objectWidth}px;" />` + 
+            `</div> ` +
+            `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random + imgWidth + objDistance}px;">`+
+            `<img src="${objectStim}" style="width:${objectWidth}px;" />` +
             `</div>`,
         choices: "NO_KEYS",
         trial_duration: dispDuration,
