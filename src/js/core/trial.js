@@ -52,7 +52,7 @@ function runSingleTrial(
     if (silhouetteResponseVer == true){
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`;
         var objectStim = `${stimFolder}table1brown${trialType}.png`;
-        var sliderStim_anchor = `${stimFolder}human-silhouetteambiguous.png`;
+        var sliderStim_anchor = `${stimFolder}demo-cat-blue.png`;
         var sliderStim_object = `${stimFolder}table-response.png`;
     } else {
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`;
@@ -61,29 +61,32 @@ function runSingleTrial(
         var sliderStim_object = objectStim;
     }
     var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the distance between the two images you saw.<br>Do your best! (The "Continue" button is at the bottom of the page)</div>`;
+    
 
 
-    /* target image size for slider resizing */
-    // let tar_size = randomIntFromRange(40, 100); // default increment is 1
-    // // let tar_size = randomIntFromRange(50, 100, 5) // increment by 5
-    // let tar_size = 100;
-    // let resize_decimal = tar_size*.01;
+// /* target image size for slider resizing */
+// // let tar_size = randomIntFromRange(40, 100); // default increment is 1
+// // // let tar_size = randomIntFromRange(50, 100, 5) // increment by 5
+// // let tar_size = 100;
+// // let resize_decimal = tar_size*.01;
 
-    // let target_width = Math.floor(imgWidth * resize_decimal);
-    // let target_height = Math.floor(imgHeight * resize_decimal);
+// // let target_width = Math.floor(imgWidth * resize_decimal);
+// // let target_height = Math.floor(imgHeight * resize_decimal);
 
-    // let target_x_random = randomIntFromRange(100, w-100-target_width); // accounts for img dims to not go off screen
-    // let target_y_random = randomIntFromRange(50, h-50-target_height);
-    // console.log(w)
-    // console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
-    // console.log(`target_width: ${target_width}`)
-    // console.log(h)
-    // console.log(`Where the top of the image will be positioned target_y_random: ${target_y_random}`)
-    // console.log(`target_height: ${target_height}`)
+// // let target_x_random = randomIntFromRange(100, w-100-target_width); // accounts for img dims to not go off screen
+// // let target_y_random = randomIntFromRange(50, h-50-target_height);
+// // console.log(w)
+// // console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
+// // console.log(`target_width: ${target_width}`)
+// // console.log(h)
+// // console.log(`Where the top of the image will be positioned target_y_random: ${target_y_random}`)
+// // console.log(`target_height: ${target_height}`)
 
     /* creating locations for images on each trial */
-    let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-imgWidth-50); // accounts for img dims to not go off screen
+    let anchor_x_random = randomIntFromRange(50, w-objDistance-objectWidth-50); // accounts for img dims to not go off screen
     let anchor_y_random = randomIntFromRange(50, h-imgHeight-50);
+    console.log(`Anchor position: x=${anchor_x_random}, y=${anchor_y_random}, imgWidth=${imgWidth}, imgHeight=${imgHeight}, objDistance=${objDistance}, screen w=${w}, h=${h}`);
+
 
     /* calculate categorical location of where anchor image is */
     if (anchor_x_random < w/2) {
@@ -93,6 +96,7 @@ function runSingleTrial(
     } else {
         var screenside_category = "Error"
     }
+
 
     // var slider_start = 70;
     var slider_start = 0;
@@ -109,10 +113,10 @@ function runSingleTrial(
     var dispSpacingResponse = {
         type: jsPsychHtmlSliderSpacing,
         anchor_stimulus: `<img src="${sliderStim_anchor}" style="width:${imgWidth}px;" />`,
-        secondary_stimulus: `<img src="${sliderStim_object}" style="width:${imgWidth}px;"  />`,
+        secondary_stimulus: `<img src="${sliderStim_object}" style="width:${objectWidth}px;"  />`,
         anchor_stimulus_width: imgWidth,
-        secondary_stimulus_width: imgWidth,
-        tallest_img_height: imgHeight,
+        secondary_stimulus_width: objectWidth,
+        tallest_img_height: objectHeight,
         set_distance_pixel_max: max_distance,
         slider_start: slider_start,
         min: slider_min,
@@ -219,7 +223,7 @@ function runSingleTrial(
             `<img src="${thisStim}" style="width:${imgWidth}px;" />` + 
             `</div> ` + 
             `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random + objDistance}px;">`+
-            `<img src="${objectStim}" style="width:${imgWidth}px;" />` + 
+            `<img src="${objectStim}" style="width:${objectWidth}px;" />` + 
             `</div>`,
         choices: "NO_KEYS",
         trial_duration: dispDuration,
@@ -289,9 +293,9 @@ function runSingleTrial(
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(dispSpacingResponse);
-    if (attn_trial_list.includes(trueTrialCount)){
-        timelineTrialsToPush.push(attnTrial);
-    }
+    // if (attn_trial_list.includes(trueTrialCount)){
+       // timelineTrialsToPush.push(attnTrial);
+   // }
     // timelineTrialsToPush.push(sexJudge);
 
 
