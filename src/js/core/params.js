@@ -57,6 +57,10 @@ var origHeight = 900;
 var imgWidth = 500; // your desired display img width
 var imgHeight = (imgWidth / origWidth) * origHeight;
 
+// define object stim size, should be 164 x 545px
+var objectWidth = 164; // moved these two variables out to params
+var objectHeight = 545;
+
 
 
 

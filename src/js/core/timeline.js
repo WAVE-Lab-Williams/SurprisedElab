@@ -250,7 +250,7 @@ var poss_people_race = ["cat", "dog", "cow", "horse"];
 var poss_people_sex = ["-blue"];
 var poss_people_variation = ["1","2","3","4"]; 
 var poss_disp_duration = [500,900];
-var poss_obj_distance = [210,300,390];
+var poss_obj_distance = [546,636,726];
 
 var factors = {
     people_race: poss_people_race,

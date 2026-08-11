@@ -62,9 +62,6 @@ function runSingleTrial(
     }
     var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the distance between the two images you saw.<br>Do your best! (The "Continue" button is at the bottom of the page)</div>`;
     
-    // define object stim size, should be 164 x 545px
-    var objectHeight = 164;
-    var objectWidth = 545;
 
 
 // /* target image size for slider resizing */
@@ -86,7 +83,7 @@ function runSingleTrial(
 // // console.log(`target_height: ${target_height}`)
 
     /* creating locations for images on each trial */
-    let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-imgWidth-50); // accounts for img dims to not go off screen
+    let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-objectWidth-50); // accounts for img dims to not go off screen
     let anchor_y_random = randomIntFromRange(50, h-imgHeight-50);
     console.log(`Anchor position: x=${anchor_x_random}, y=${anchor_y_random}, imgWidth=${imgWidth}, imgHeight=${imgHeight}, objDistance=${objDistance}, screen w=${w}, h=${h}`);
 
@@ -116,10 +113,10 @@ function runSingleTrial(
     var dispSpacingResponse = {
         type: jsPsychHtmlSliderSpacing,
         anchor_stimulus: `<img src="${sliderStim_anchor}" style="width:${imgWidth}px;" />`,
-        secondary_stimulus: `<img src="${sliderStim_object}" style="width:${imgWidth}px;"  />`,
+        secondary_stimulus: `<img src="${sliderStim_object}" style="width:${objectWidth}px;"  />`,
         anchor_stimulus_width: imgWidth,
-        secondary_stimulus_width: objectHeight,
-        tallest_img_height: imgHeight,
+        secondary_stimulus_width: objectWidth,
+        tallest_img_height: objectHeight,
         set_distance_pixel_max: max_distance,
         slider_start: slider_start,
         min: slider_min,
@@ -226,7 +223,7 @@ function runSingleTrial(
             `<img src="${thisStim}" style="width:${imgWidth}px;" />` + 
             `</div> ` + 
             `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random + objDistance}px;">`+
-            `<img src="${objectStim}" style="width:${imgWidth}px;" />` + 
+            `<img src="${objectStim}" style="width:${objectWidth}px;" />` + 
             `</div>`,
         choices: "NO_KEYS",
         trial_duration: dispDuration,
