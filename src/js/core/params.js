@@ -4,10 +4,10 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/people_samebody_shadow/'
+var stimFolder = 'src/assets/stimuli/animals/'
 
-var runIntro = true;
-var runInstr = true;
+var runIntro = false;
+var runInstr = false;
 var runExpt = true;
 var runClose = true;
 var runPreload = true;
@@ -52,9 +52,12 @@ var h =
     document.body.clientHeight;
 
 // setting display image width
-var origWidth = 164;
-var origHeight = 545;
-var imgWidth = 150; // your desired display img width
+var origWidth = 835;
+var origHeight = 900;
+var imgWidth = 500; // your desired display img width
 var imgHeight = (imgWidth / origWidth) * origHeight;
+
+
+
 
 

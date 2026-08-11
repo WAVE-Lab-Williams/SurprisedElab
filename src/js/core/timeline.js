@@ -166,15 +166,14 @@ INSTR PROCEDURE (*sec_instr)
 
 // // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
 var demo_image_race= ["demo"];
-var demo_image_sex= ["human"]
-var demo_image_variation = ["blue"]
+var demo_image_sex= ["-cat"];
+var demo_image_variation = ["blue"];
 var demo_display_durations = [800];
 var demo_obj_distance = [350];
 
 forPreload.push(`${stimFolder}${demo_image_race[0]}${demo_image_sex[0]}-${demo_image_variation[0]}.png`);
 forPreload.push(`${stimFolder}table1brownprac.png`);
-forPreload.push(`${stimFolder}human-silhouetteambiguous.png`)
-forPreload.push(`${stimFolder}table-response.png`)
+forPreload.push(`${stimFolder}table-response.png`);
 
 //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
 var thisDemoDispDuration = randomChoice(demo_display_durations,1)[0];
@@ -246,10 +245,10 @@ EXPERIMENT SECTION (*sec_expt)
 
 /* -------- defining factors && exptdesign (*factors) --------*/
 
-var poss_people_race = ["L"];
+var poss_people_race = ["cat", "dog", "cow", "horse"];
 // var poss_people_race = randomChoice(["W","L"], 1);
-var poss_people_sex = ["F","M"];
-var poss_people_variation = ["1","4","5"]; // WF 3 and 2 are the worst WFs
+var poss_people_sex = ["-blue"];
+var poss_people_variation = ["1","2","3","4"]; 
 var poss_disp_duration = [500,900];
 var poss_obj_distance = [210,300,390];
 
