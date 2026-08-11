@@ -83,7 +83,7 @@ function runSingleTrial(
 // // console.log(`target_height: ${target_height}`)
 
     /* creating locations for images on each trial */
-    let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-objectWidth-50); // accounts for img dims to not go off screen
+    let anchor_x_random = randomIntFromRange(50, w-objDistance-objectWidth-50); // accounts for img dims to not go off screen
     let anchor_y_random = randomIntFromRange(50, h-imgHeight-50);
     console.log(`Anchor position: x=${anchor_x_random}, y=${anchor_y_random}, imgWidth=${imgWidth}, imgHeight=${imgHeight}, objDistance=${objDistance}, screen w=${w}, h=${h}`);
 
