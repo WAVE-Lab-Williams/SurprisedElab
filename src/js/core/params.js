@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/people_samebody_shadow/'
+var stimFolder = 'src/assets/stimuli/animals/'
 
 var runIntro = true;
 var runInstr = true;
@@ -52,9 +52,31 @@ var h =
     document.body.clientHeight;
 
 // setting display image width
-var origWidth = 164;
-var origHeight = 545;
-var imgWidth = 150; // your desired display img width
+var origWidth = 835;
+var origHeight = 900;
+var imgWidth = 500; // your desired display img width
 var imgHeight = (imgWidth / origWidth) * origHeight;
+
+// define object stim size, should be 164 x 545px
+// it is okay for objectWidth and imgWidth to be vastly different
+// but it is NOT okay for objHeight and imgHeight to be vastly different
+// because dispSlider lines them up based on the top of the images, so alignment could look jank
+// especially if you want them both to look like they're sitting on the ground.
+var objectWidth = 164; 
+var objectHeight = 545; 
+
+// Largest edge-to-edge gap (px) that will ever be shown, INCLUDING the +/-20 jitter applied in
+// timeline.js. Used to size the slider-reproduction stage in trial.js. Update this if you add a
+// bigger poss_obj_distance/demo_obj_distance value or change the jitter range.
+var maxPossibleGap = 260;
+
+// Smallest browser window the anchor+object images can be laid out in without going off screen
+// (mirrors the 50px margins used by anchor_x_random/anchor_y_random in trial.js). Participants
+// with a smaller window are blocked at the start of the study (see timeline.js).
+var minRequiredWidth = imgWidth + objectWidth + maxPossibleGap + 100;
+var minRequiredHeight = Math.max(imgHeight, objectHeight) + 100;
+
+
+
 
 

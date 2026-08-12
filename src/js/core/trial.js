@@ -52,7 +52,7 @@ function runSingleTrial(
     if (silhouetteResponseVer == true){
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`;
         var objectStim = `${stimFolder}table1brown${trialType}.png`;
-        var sliderStim_anchor = `${stimFolder}human-silhouetteambiguous.png`;
+        var sliderStim_anchor = `${stimFolder}demo-cat-blue.png`;
         var sliderStim_object = `${stimFolder}table-response.png`;
     } else {
         var thisStim = `${stimFolder}${personRace}${personSex}-${personVariation}.png`;
@@ -61,29 +61,34 @@ function runSingleTrial(
         var sliderStim_object = objectStim;
     }
     var persistent_prompt = `<div style="position: fixed; top: 25px; left: 50%; width: 90%; transform: translateX(-50%); text-align: center;">Click and drag the slider below to recreate the distance between the two images you saw.<br>Do your best! (The "Continue" button is at the bottom of the page)</div>`;
+    
 
 
-    /* target image size for slider resizing */
-    // let tar_size = randomIntFromRange(40, 100); // default increment is 1
-    // // let tar_size = randomIntFromRange(50, 100, 5) // increment by 5
-    // let tar_size = 100;
-    // let resize_decimal = tar_size*.01;
+// /* target image size for slider resizing */
+// // let tar_size = randomIntFromRange(40, 100); // default increment is 1
+// // // let tar_size = randomIntFromRange(50, 100, 5) // increment by 5
+// // let tar_size = 100;
+// // let resize_decimal = tar_size*.01;
 
-    // let target_width = Math.floor(imgWidth * resize_decimal);
-    // let target_height = Math.floor(imgHeight * resize_decimal);
+// // let target_width = Math.floor(imgWidth * resize_decimal);
+// // let target_height = Math.floor(imgHeight * resize_decimal);
 
-    // let target_x_random = randomIntFromRange(100, w-100-target_width); // accounts for img dims to not go off screen
-    // let target_y_random = randomIntFromRange(50, h-50-target_height);
-    // console.log(w)
-    // console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
-    // console.log(`target_width: ${target_width}`)
-    // console.log(h)
-    // console.log(`Where the top of the image will be positioned target_y_random: ${target_y_random}`)
-    // console.log(`target_height: ${target_height}`)
+// // let target_x_random = randomIntFromRange(100, w-100-target_width); // accounts for img dims to not go off screen
+// // let target_y_random = randomIntFromRange(50, h-50-target_height);
+// // console.log(w)
+// // console.log(`Where the left of the image will be positioned target_x_random: ${target_x_random}`)
+// // console.log(`target_width: ${target_width}`)
+// // console.log(h)
+// // console.log(`Where the top of the image will be positioned target_y_random: ${target_y_random}`)
+// // console.log(`target_height: ${target_height}`)
 
     /* creating locations for images on each trial */
-    let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-imgWidth-50); // accounts for img dims to not go off screen
-    let anchor_y_random = randomIntFromRange(50, h-imgHeight-50);
+    // objDistance is the edge-to-edge gap between the anchor and object images, so the object's
+    // right edge sits at anchor_x + imgWidth + objDistance + objectWidth.
+    let anchor_x_random = randomIntFromRange(50, w-imgWidth-objDistance-objectWidth-50); // accounts for img dims to not go off screen
+    let anchor_y_random = randomIntFromRange(50, h-Math.max(imgHeight,objectHeight)-50);
+    console.log(`Anchor position: x=${anchor_x_random}, y=${anchor_y_random}, imgWidth=${imgWidth}, imgHeight=${imgHeight}, objDistance=${objDistance}, screen w=${w}, h=${h}`);
+
 
     /* calculate categorical location of where anchor image is */
     if (anchor_x_random < w/2) {
@@ -94,25 +99,29 @@ function runSingleTrial(
         var screenside_category = "Error"
     }
 
+
     // var slider_start = 70;
     var slider_start = 0;
     var slider_min = 0;
     var slider_max = 100;
-    if (w >= 900) {
-        var max_distance = 900
-    } else {
-        var max_distance = w
-    }
-    
+    // Stage must be wide enough to fit the anchor + object images plus the largest true gap
+    // (maxPossibleGap, params.js), with extra room so participants can over/undershoot on the slider.
+    // FYI original experiment with the 150 imgWidth actually had leftover overshoot_room of 340px, 
+    // just because of the sizes and that I had hardcoded a max size of the slider.
+    // Keeping it at 340 for now. Do know that if we change the overshoot to be smaller, than each
+    // pixel of movement that the participant makes along the slider means MORE px-per-unit sensitivity.
+    var slider_overshoot_room = 340;
+    var max_distance = Math.min(w, imgWidth+objectWidth+maxPossibleGap+slider_overshoot_room);
+
     console.log(objDistance);
 
     var dispSpacingResponse = {
         type: jsPsychHtmlSliderSpacing,
         anchor_stimulus: `<img src="${sliderStim_anchor}" style="width:${imgWidth}px;" />`,
-        secondary_stimulus: `<img src="${sliderStim_object}" style="width:${imgWidth}px;"  />`,
+        secondary_stimulus: `<img src="${sliderStim_object}" style="width:${objectWidth}px;"  />`,
         anchor_stimulus_width: imgWidth,
-        secondary_stimulus_width: imgWidth,
-        tallest_img_height: imgHeight,
+        secondary_stimulus_width: objectWidth,
+        tallest_img_height: Math.max(imgHeight,objectHeight), //no longer have to update this variable, will simply select the variable's height that is taller.
         set_distance_pixel_max: max_distance,
         slider_start: slider_start,
         min: slider_min,
@@ -141,12 +150,12 @@ function runSingleTrial(
             true_trial_count: trueTrialCount,
             anchor_x_position: anchor_x_random,
             anchor_y_position: anchor_y_random,
-            secondary_x_position: anchor_x_random + objDistance,
+            secondary_x_position: anchor_x_random + imgWidth + objDistance,
             screenside_category: screenside_category,
         }, // data end
         on_finish: function(data){
-            // objDistance is left-to-left between stimuli; distance_px is the edge-to-edge gap (excludes anchor width), so subtract imgWidth to compare on the same scale
-            data.thisDifference = data.distance_px - (objDistance - imgWidth)
+            // objDistance and distance_px are both the edge-to-edge gap, so they compare directly
+            data.thisDifference = data.distance_px - objDistance
         } // on finish end
     }; // dispImgSlider end
 
@@ -217,9 +226,9 @@ function runSingleTrial(
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random}px;">`+
             `<img src="${thisStim}" style="width:${imgWidth}px;" />` + 
-            `</div> ` + 
-            `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random + objDistance}px;">`+
-            `<img src="${objectStim}" style="width:${imgWidth}px;" />` + 
+            `</div> ` +
+            `<div style="position: absolute; top: ${anchor_y_random}px; left: ${anchor_x_random + imgWidth + objDistance}px;">`+
+            `<img src="${objectStim}" style="width:${objectWidth}px;" />` +
             `</div>`,
         choices: "NO_KEYS",
         trial_duration: dispDuration,
@@ -289,9 +298,9 @@ function runSingleTrial(
     timelineTrialsToPush.push(poststim)
     timelineTrialsToPush.push(cursor_on);
     timelineTrialsToPush.push(dispSpacingResponse);
-    if (attn_trial_list.includes(trueTrialCount)){
-        timelineTrialsToPush.push(attnTrial);
-    }
+    // if (attn_trial_list.includes(trueTrialCount)){
+       // timelineTrialsToPush.push(attnTrial);
+   // }
     // timelineTrialsToPush.push(sexJudge);
 
 

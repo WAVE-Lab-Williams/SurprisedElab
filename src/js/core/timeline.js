@@ -166,15 +166,14 @@ INSTR PROCEDURE (*sec_instr)
 
 // // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
 var demo_image_race= ["demo"];
-var demo_image_sex= ["human"]
-var demo_image_variation = ["blue"]
+var demo_image_sex= ["-cat"];
+var demo_image_variation = ["blue"];
 var demo_display_durations = [800];
-var demo_obj_distance = [350];
+var demo_obj_distance = [200]; // gap (edge-to-edge px); see poss_obj_distance below for derivation
 
 forPreload.push(`${stimFolder}${demo_image_race[0]}${demo_image_sex[0]}-${demo_image_variation[0]}.png`);
 forPreload.push(`${stimFolder}table1brownprac.png`);
-forPreload.push(`${stimFolder}human-silhouetteambiguous.png`)
-forPreload.push(`${stimFolder}table-response.png`)
+forPreload.push(`${stimFolder}table-response.png`);
 
 //decide what the parameters for the demo trial should be. Sometimes you hardcode this, sometimes you randomly choose from the options you defined above.
 var thisDemoDispDuration = randomChoice(demo_display_durations,1)[0];
@@ -246,12 +245,18 @@ EXPERIMENT SECTION (*sec_expt)
 
 /* -------- defining factors && exptdesign (*factors) --------*/
 
-var poss_people_race = ["L"];
+var poss_people_race = ["cat", "dog", "cow", "horse"];
 // var poss_people_race = randomChoice(["W","L"], 1);
-var poss_people_sex = ["F","M"];
-var poss_people_variation = ["1","4","5"]; // WF 3 and 2 are the worst WFs
+var poss_people_sex = ["-blue"];
+var poss_people_variation = ["1","2","3","4"]; 
 var poss_disp_duration = [500,900];
-var poss_obj_distance = [210,300,390];
+// Edge-to-edge gap (px) between the anchor and object images (see objDistance usage in
+// trial.js) -- independent of imgWidth/objectWidth, so these don't need to be re-tuned if the
+// stimulus sizes change again. Values reproduce the original experiment's gaps: original
+// poss_obj_distance [210,300,390] minus the original imgWidth (150) = [60,150,240], same as
+// demo_obj_distance's 200 (350-150). Keep the max value here <= maxPossibleGap - 20 (params.js)
+// so the jitter below never exceeds what the slider-reproduction stage can show.
+var poss_obj_distance = [60,150,240];
 
 var factors = {
     people_race: poss_people_race,
@@ -352,6 +357,30 @@ timelineclose.push(closing);
 Run Expt (*sec_run)
 ===============================================================
 */
+
+var screenTooSmall = w < minRequiredWidth || h < minRequiredHeight;
+
+var screenSizeCheck = {
+    timeline: [{
+        type: jsPsychHtmlKeyboardResponse,
+        choices: "NO_KEYS",
+        trial_duration: null,
+        stimulus: function() {
+            var returnMessage = (participantType === 'prolific')
+                ? `<p>Otherwise, please return the study on Prolific if you're unable to accomodate the required width.</p>`
+                : `<p>Otherwise, please return the study (or let your experimenter know) if you're unable to accomodate the required width.</p>`;
+            return `<div style="max-width:600px;margin:15vh auto 0 auto;text-align:center;font-size:1.2em;">
+                <p>Your browser window is too small to run this study (needs at least ${minRequiredWidth}x${minRequiredHeight}px, currently ${w}x${h}px).</p>
+                <p>To fix this error, you can <i>maximize your browser window</i> or switch to a larger monitor, <b>then refresh this page</b>!</p>
+                ${returnMessage}
+            </div>`;
+        },
+    }],
+    conditional_function: function () {
+        return screenTooSmall;
+    },
+};
+timelinebase = timelinebase.concat(screenSizeCheck);
 
 if (runPreload) {
     var preload = {
