@@ -52,11 +52,11 @@ var h =
     document.body.clientHeight;
 
 // setting display image width
-var origWidth = 252;
+var origWidth = 164;
 var origHeight = 545;
 // var origWidth = 835; // animal ver
 // var origHeight = 900;
-var imgWidth = 150; // your desired display img width
+var imgWidth = 164; // your desired display img width (was originally 150)
 var imgHeight = (imgWidth / origWidth) * origHeight;
 
 // define object stim size, should be 164 x 545px
