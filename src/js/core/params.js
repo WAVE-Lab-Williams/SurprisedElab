@@ -4,7 +4,7 @@ Defining Parameter Variables
 ===============================================================
 */
 
-var stimFolder = 'src/assets/stimuli/animals/'
+var stimFolder = 'src/assets/stimuli/shapes/'
 
 var runIntro = true;
 var runInstr = true;
@@ -52,9 +52,11 @@ var h =
     document.body.clientHeight;
 
 // setting display image width
-var origWidth = 835;
-var origHeight = 900;
-var imgWidth = 500; // your desired display img width
+var origWidth = 252;
+var origHeight = 545;
+// var origWidth = 835; // animal ver
+// var origHeight = 900;
+var imgWidth = 150; // your desired display img width
 var imgHeight = (imgWidth / origWidth) * origHeight;
 
 // define object stim size, should be 164 x 545px

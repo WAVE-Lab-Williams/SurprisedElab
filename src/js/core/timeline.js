@@ -166,8 +166,8 @@ INSTR PROCEDURE (*sec_instr)
 
 // // make sure to load any images you need for the demo itself. Usually you have different demo images than the main expt, such that you don't give away the content of the expt itself (but still give the participant practice and familiarity with the task. In this case, though, the demo images themselves are identical to the main expt. Variable names are the only difference.
 var demo_image_race= ["demo"];
-var demo_image_sex= ["-cat"];
-var demo_image_variation = ["blue"];
+var demo_image_sex= ["rectangle"];
+var demo_image_variation = ["black"];
 var demo_display_durations = [800];
 var demo_obj_distance = [200]; // gap (edge-to-edge px); see poss_obj_distance below for derivation
 
@@ -245,10 +245,10 @@ EXPERIMENT SECTION (*sec_expt)
 
 /* -------- defining factors && exptdesign (*factors) --------*/
 
-var poss_people_race = ["cat", "dog", "cow", "horse"];
+var poss_people_race = ["red", "gray"];
 // var poss_people_race = randomChoice(["W","L"], 1);
-var poss_people_sex = ["-blue"];
-var poss_people_variation = ["1","2","3","4"]; 
+var poss_people_sex = randomChoice(["rectangle", "oval", "rounded", "triangle"], 1);
+var poss_people_variation = ["1"]; 
 var poss_disp_duration = [500,900];
 // Edge-to-edge gap (px) between the anchor and object images (see objDistance usage in
 // trial.js) -- independent of imgWidth/objectWidth, so these don't need to be re-tuned if the
@@ -266,8 +266,16 @@ var factors = {
     obj_distance: poss_obj_distance
 }
 
-var full_design = jsPsych.randomization.factorial(factors, 1);
-console.log(full_design);
+
+var n_reps = 1;
+
+// RUNS ONLY ONE PERSON_RACE FACTOR PER PARTICIPANT
+var factorial_design = jsPsych.randomization.factorial(factors, n_reps);
+console.log(factorial_design);
+
+// RUNS ALL PERSON_RACE FACTORS PER PARTICIPANT
+// var full_design = jsPsych.randomization.factorial(factors, 1);
+// console.log(full_design);
 
 /* -------  Set Preload Images for Expt (*preload_expt) -------------- */
 for (var i = 0; i < poss_people_race.length; i++) {
@@ -278,20 +286,20 @@ for (var i = 0; i < poss_people_race.length; i++) {
     } // end j loop
 } // end i loop
 
-forPreload.push(`${stimFolder}gray_rectangle.png`);
+forPreload.push(`${stimFolder}demorectangle-black.png`);
 forPreload.push(`${stimFolder}table1brownexpt.png`);
 var jitter_distance_amount;
 
 /* ------- timeline expt push (*pushExpt ) -------------- */
-for (var elem = 0; elem < full_design.length; elem++) {
+for (var elem = 0; elem < factorial_design.length; elem++) {
 // for (var elem = 0; elem < 1; elem++) {
     jitter_distance_amount = randomIntFromRange(-20,20,10); // Make sure to check that these make sense with your possible distances
     runSingleTrial(
-        full_design[elem].people_race,
-        full_design[elem].people_sex,
-        full_design[elem].people_variation,
-        full_design[elem].obj_distance+jitter_distance_amount,
-        full_design[elem].disp_duration,
+        factorial_design[elem].people_race,
+        factorial_design[elem].people_sex,
+        factorial_design[elem].people_variation,
+        factorial_design[elem].obj_distance+jitter_distance_amount,
+        factorial_design[elem].disp_duration,
         elem,
         timelineexpt,
         'expt',
