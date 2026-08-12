@@ -267,7 +267,7 @@ var factors = {
 }
 
 
-var n_reps = 1;
+var n_reps = 3;
 
 // RUNS ONLY ONE PERSON_RACE FACTOR PER PARTICIPANT
 var factorial_design = jsPsych.randomization.factorial(factors, n_reps);
